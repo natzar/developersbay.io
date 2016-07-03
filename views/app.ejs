@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google" value="notranslate">
+
+  <title>Developers Bay</title>
+
+  <!-- Bootcards CSS files for desktop, iOS and Android -->
+  <!-- You'll only need to load one of these (depending on the device you're using) in production -->
+  <!-- (these include the required Bootstrap CSS) -->
+ <link href="bootcards-1.0.0/dist/css/bootcards-desktop.min.css" rel="stylesheet">
+  <!-- <link href="bootcards-1.0.0/dist/css/bootcards-ios.min.css" rel="stylesheet"> -->
+  <!--<link href="bootcards-1.0.0/dist/css/bootcards-android.min.css" rel="stylesheet">-->
+  <link href="css/style.css" rel="stylesheet">
+  <!-- Font awesome -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+  <script type="text/x-handlebars">
+  <!-- fixed top navbar -->
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <button type="button" class="btn btn-default btn-back pull-left hidden" onclick="history.back()">
+        <i class="fa fa-lg fa-chevron-left"></i>
+        <span>Back</span>
+      </button>
+      <!-- menu button to show/ hide the off canvas menu -->
+      <button type="button" class="btn btn-default btn-menu pull-left" data-toggle="offcanvas">
+        <i class="fa fa-lg fa-bars"></i>
+        <span>Menu</span>
+      </button>
+
+      {{#link-to 'index' classNames="navbar-brand" title="Developers, developers, developers" }}Developers Bay{{/link-to}}
+
+      <!--right aligned button-->
+
+      <a class="btn btn-primary push-right navbar-right" href="http://developersbay.io/#/adddeveloper">Add Developer</a>
+<!--      <a class="btn btn-inverse push-right navbar-right" href="/logout">Salir</a> -->
+
+      <!--navbar menu options: shown on desktop only -->
+      <div class="navbar-collapse collapse">
+      <!--  <ul class="nav navbar-nav">
+         <li>
+            <a href="#">
+              <i class="fa fa-dashboard"></i>Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-building-o"></i>Companies
+            </a>
+          </li>
+          <li class="active">
+            <a href="#">
+              <i class="fa fa-font"></i>Contacts
+            </a>
+          </li>
+        </ul> -->
+      </div>          
+    </div>
+  </div>   
+
+  <!-- slide in off canvas menu (mobile only) -->
+  <nav class="navmenu offcanvas offcanvas-left">
+    <ul class="nav">
+      <li>
+        <a href="#">
+          <i class="fa fa-lg fa-dashboard"></i>Dashboard
+        </a>
+      </li>
+      <li class="active">
+        <a href="starter-template.html">
+          <i class="fa fa-lg fa-users"></i>Contacts
+        </a>
+      </li>
+      <li>
+        <a href="az-picker.html">
+          <i class="fa fa-lg fa-users"></i>AZ Picker
+        </a>
+      </li>
+    </ul>
+  </nav><!--nav-->
+
+  <div class="container bootcards-container push-right">
+
+    <!-- This is where you come in... -->
+    <!-- I've added some sample data below so you can get a feel for the required markup -->
+
+   {{outlet}}
+
+  </div><!--container-->
+
+  <!-- fixed tabbed footer -->
+  <div class="navbar navbar-default navbar-fixed-bottom">
+
+    <div class="container">
+
+      <div class="bootcards-desktop-footer clearfix">
+        <p class="pull-left" style="text-align:left"><strong>Developers Bay</strong><br>
+        <i>Developers Database</i><br>
+        betolopezayesa@gmail.com<br>
+        </p>
+        <p class="pull-right" style="text-align:left">&copy; 2014 <a href="http://www.betoayesa.com">Beto López  Ayesa</a> <a href="http://www.twitter.com/betoayesa">@betoayesa</a>. <a href="/termsandconditions">Terms and conditions (Spanish)</a><br>
+        <!-- <a href="/changelog">Changelog</a>  | <a href="/roadmap">Roadmap</a> -->
+        </p>
+      </div>
+
+      <div class="btn-group">
+        <a href="#" class="btn btn-default">
+          <i class="fa fa-2x fa-dashboard"></i>Dashboard
+        </a>
+        <a href="starter-template.html" class="btn btn-default active">
+          <i class="fa fa-2x fa-users"></i>Contacts
+        </a>
+        <a href="az-picker.html" class="btn btn-default">
+          <i class="fa fa-2x fa-font"></i>AZ Picker
+        </a>
+      </div>
+    </div>
+
+  </div><!--footer-->
+
+
+</script>
+
+<script type="text/x-handlebars" id="developers">
+ <div class="row">
+   
+    
+      <!-- left list column -->
+      <div class="col-sm-5 bootcards-list" id="list" data-title="Contacts">
+        <div class="panel panel-default">       
+          <div class="panel-body">
+            <div class="search-form">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="form-group">
+
+					{{input class="input form-control"  type="text" value=filter placeholder="Filter developers"}}
+						 <i class="fa fa-search"></i>                  
+                   
+                  </div>
+                </div>
+                
+              </div>                
+            </div>         
+          </div>  <!--panel body-->
+
+          <div class="list-group" style="height:400px;overflow:scroll;">  
+			{{#each filteredContent}}
+	        	{{#link-to 'developer' this tagName="a" class="list-group-item" }}
+                {{imagepath src=image}}
+                {{#if hot}}
+                <span class="badge badge-success badge-info info">Available immediately</span>
+                {{/if}}
+	     	 	<h4 class="list-group-item-heading">{{name}}</h4>
+	     	 	<p class="list-group-item-text">{{skills}}</p>
+		        {{/link-to}}   
+            {{/each}}
+          </div><!--list-group-->
+
+          <div class="panel-footer">
+            <small class="pull-left">Showing {{filteredContent.length}} developers</small>
+
+            
+          </div>
+        </div><!--panel-->
+
+        </div><!--list-->
+
+        <!--list details column-->
+        <div class="col-sm-7 bootcards-cards hidden-xs">
+
+
+
+         {{outlet}}
+
+        </div><!--list-details-->
+
+    </div><!--row-->
+
+ </script>
+ 
+
+ 
+ 
+ 
+ 
+ 
+ <script type="text/x-handlebars" id="developers/index">
+ 
+ 
+ 
+ <div class="panel panel-default bootcards-richtext">
+            <div class="panel-heading">
+              <h3 class="panel-title">Welcome </h3>
+            </div>
+            <div class="panel-body">
+            <p>
+            This is a prototype to validating an idea. 
+            </p>
+            <p> It started as a way to hire Freelance Developers. It a evolved as a recruitment agency. It will survive as a developer database.</p>
+		
+		<p>Contact Beto at betolopezayesa@gmail.com, if you want to upload your profile, need to hire developers,  buy this domain, or whatever you have in mind </p>
+		
+           
+            </div>
+            <div class="panel-footer">
+<small>Last Update April 6th, 2015</small>
+            </div>
+          </div><!--end rich text card--> 
+
+  </script>
+  
+<script type="text/x-handlebars" id="developer" data-template-name="developer">
+
+    
+         {{#if isEditing}}
+         <div class="panel panel-default">
+          <div class="panel-heading clearfix">
+                <h3 class="panel-title pull-left">Edit {{model.name}}</h3>
+<!--                <div class="btn-group pull-right visible-xs">
+                 <button {{action 'edit'}}> 
+                    <i class="fa fa-pencil"></i>
+                    <span>Edit</span>
+                  </button>
+                </div>  
+               <button classNames="btn btn-primary pull-right hidden-xs"  {{action 'edit'}}>
+                  <i class="fa fa-pencil"></i>
+                  <span>Edit</span>
+                </button> -->
+              </div>
+              <div class="panel-body">
+{{#object-form for=this  buttonLabel="Save"}}
+ <label>Image Profile</label>
+
+     
+
+
+        <div class="buttons">
+            <button class="btn" {{action "uploadAllFiles"}}>Upload All</button>
+        </div>
+
+        {{#if uploadStatus.uploading}}
+            <h3 class="uploading-percentage">Uploaded Percentage: {{uploadStatus.percentComplete}}%</h3>
+        {{/if}}
+
+        {{#view view.DragDrop}}
+
+            {{#if uploadStatus.error}}
+                <div class="error">An error occurred during the upload process. Please try again later.</div>
+            {{/if}}
+
+            {{#each controller.validFiles}}
+
+                <div {{bind-attr class="className :file"}}>
+                    {{name}}
+                    <a class="remove" {{action "deleteFile" this}}>Discard.</a>
+                    {{view view.ImagePreview imageBinding="this"}}
+                </div>
+
+            {{/each}}
+
+            {{view view.SingleInput}}
+
+        {{/view}}
+			{{form-field label="Name" for="name" value=model.name}}
+			{{#form-field for="hot" label="Hot"}}
+			{{input type="checkbox" class="form-control" checked=model.hot}}
+			{{/form-field}}		
+			{{#form-field for="description" label="Description"}}
+			{{textarea class="form-control" value=model.description}}
+			{{/form-field}}
+			{{form-field label="Category" for="category" value=model.category}}
+			{{form-field label="City" for="city" value=model.city}}
+			{{form-field label="Country" for="country" value=model.country}}
+			{{form-field label="Skills" for="Skills" value=model.skills}}	
+			{{form-field label="Languages" for="Languages" value=model.languages}}			
+			{{form-field label="Website" for="website" value=model.website}}			
+			{{#form-field for="available" label="available"}}
+			{{input type="checkbox" class="form-control" checked=model.available}}
+			{{/form-field}}			
+			{{form-field label="Email" for="email" value=model.email}}						
+			{{/object-form}}
+			</div>
+        <div class="form-group">
+      <button {{action 'doneEditing'}} class='btn btn-block btn-primary'>Guardar</button>
+    </div>    
+    </div>
+    {{else}}
+    
+          <!--contact details -->
+          <div id="contactCard">
+
+            <div class="panel panel-default">
+              <div class="panel-heading clearfix">
+                <h3 class="panel-title pull-left">Developer Details </h3>
+                <!-- <div class="btn-group pull-right visible-xs">
+                 <button {{action 'edit'}}> 
+                    <i class="fa fa-pencil"></i>
+                    <span>Edit</span>
+                  </button>
+                </div>  
+                <button classNames="btn btn-primary pull-right hidden-xs"  {{action 'edit'}}>
+                  <i class="fa fa-pencil"></i>
+                  <span>Edit</span>
+                </button> -->
+              </div>
+
+
+              <div class="list-group">
+                <div class="list-group-item">
+                 {{imagepath src=model.image}}
+                  <label>Name</label>
+                  <h4 class="list-group-item-heading">{{model.name}} <small>{{model.birthDate}}</small></h4>
+
+                </div>
+				<div class="list-group-item">
+              <label>Category</label>
+                  <h4 class="list-group-item-heading">{{model.category}}</h4>
+                </div>
+                <div class="list-group-item">
+                  <label>Expertise</label>
+                  <h4 class="list-group-item-heading">{{model.skills}}</h4>
+                </div>
+
+                <div class="list-group-item">
+                  <label>Location, Country</label>
+                  <h4 class="list-group-item-heading">{{model.city}}, {{model.country}}</h4>
+                </div>
+
+                <div class="list-group-item">
+                  <label>Languages</label>
+                  <h4 class="list-group-item-heading">{{model.languages}}</h4>
+                </div>
+
+                <div class="list-group-item" >
+                  <label>Available </label>
+                  <h4 class="list-group-item-heading">{{model.available}}                   <small>Actualizado {{model.updated}}</small></h4>
+
+                </div>
+                <!--
+                {{#if model.description}}
+				<div class="list-group-item" >
+                  <label>Notes</label>
+                  <h4 class="list-group-item-heading h4-p" >{{model.description}}</h4>
+                </div> 
+                {{/if}}
+                -->                
+                {{#if model.trabajosAnteriores}}
+                <div class="list-group-item" >
+                  <label>Past Works</label>
+                  <h4 class="list-group-item-heading" >{{model.trabajosAnteriores}} </h4>
+                </div>
+                {{/if}}                
+<!--                <div class="list-group-item" >
+                  <label>Prices</label>
+                  <h4 class="list-group-item-heading">{{model.precios}} </h4>
+                </div> -->
+                {{#if model.redesSociales}}
+                <div class="list-group-item" >
+                  <label>Social Networks</label>
+                  <h4 class="list-group-item-heading" >{{model.redesSociales}} </h4>
+                </div>
+                {{/if}}
+                {{#if model.web}}
+                <div class="list-group-item" >
+                  <label>Personal Page</label>
+                  <h4 class="list-group-item-heading" >{{model.web}} </h4>
+                </div>
+                {{/if}}
+                {{#if model.email}}
+                <div class="list-group-item">
+                	<label>Contact</label>
+                	
+
+
+			{{#object-form for=this action="doneSendMessage" buttonLabel="Save"}}
+  <div class="form-group">
+  <label>Your Email</label>
+   		{{input type=type value=from id=from placeholder="Your Email" class="form-control"}}
+   		</div>
+   		  <div class="form-group">
+   		  <label>Your Message</label>
+		{{textarea class="form-control" value=message  id=message  placeholder="Your Message"}}			
+
+			</div>
+{{/object-form}}
+		<button {{action 'doneWritingMessage'}} class="btn btn-primary">Send Message</button>
+
+
+
+		
+                	<!-- <h4 class="list-group-item-heading">{{model.email}} </h4> -->
+                	
+                </div>
+                {{/if}}				
+              </div>
+
+              <div class="panel-footer">
+                <small class="pull-left">Developers Bay</small>
+
+                </div>    
+              </div>
+
+            </div><!--contact card-->           
+   {{/if}}
+</script>
+<script type="text/x-handlebars" id="adddeveloper">
+	<div class="col-lg-12">	
+		<div class="panel panel-default bootcards-richtext">
+		<div class="panel-heading">
+		<h3 class="panel-title">Add new developer to database</h3>
+		</div>
+		<div class="panel-body">
+			{{#object-form for=this action="updateUser" buttonLabel="Save"}}
+  <label>Image Profile</label>
+
+     
+
+
+        <div class="buttons">
+            <button class="btn" {{action "uploadAllFiles"}}>Upload All</button>
+        </div>
+
+        {{#if uploadStatus.uploading}}
+            <h3 class="uploading-percentage">Uploaded Percentage: {{uploadStatus.percentComplete}}%</h3>
+        {{/if}}
+
+        {{#view view.DragDrop}}
+
+            {{#if uploadStatus.error}}
+                <div class="error">An error occurred during the upload process. Please try again later.</div>
+            {{/if}}
+
+            {{#each controller.validFiles}}
+
+                <div {{bind-attr class="className :file"}}>
+                    {{name}}
+                    <a class="remove" {{action "deleteFile" this}}>Discard.</a>
+                    {{view view.ImagePreview imageBinding="this"}}
+                </div>
+
+            {{/each}}
+
+            {{view view.SingleInput}}
+
+        {{/view}}
+
+			{{form-field label="Name" for="name" value=name}}
+			{{#form-field for="hot" label="Hot"}}
+			<small>Available immediately</small>
+			{{input type="checkbox" class="form-control" value=1}}
+			{{/form-field}}	
+			{{form-field for="category" label="Category" value=category}}
+			{{form-field for="skills" label="Skills" value=skills}}
+			{{#form-field for="description" label="Description"}}
+			{{textarea class="form-control" value=description}}
+			{{/form-field}}
+			{{form-field label="City" for="city" value=city}}
+			{{form-field label="Country" for="country" value=country}}
+			{{form-field label="Languages" for="Languages" value=languages}}			
+			{{#form-field for="available" label="Available" value=available}}
+			{{input type="checkbox" class="form-control" value=1}}
+			{{/form-field}}			
+			{{form-field label="Email" for="email" value=email}}						
+			{{/object-form}}
+		</div>
+		<div class="panel-footer">
+		<button {{action 'doneCreating'}} class="btn btn-primary">Guardar</button>
+		</div>
+		</div><!--end rich text card--> 
+
+
+      </div>      
+</script>
+ 
+  <script type="text/x-handlebars" data-template-name="components/image">
+
+</script>
+
+ 
+  <script type="text/x-handlebars" data-template-name="components/form-field">
+  <div class="form-group">
+    <label {{bind-attr for=label}}>{{label}}</label>
+    {{#if template}}
+      {{yield}}
+    {{else}}
+      {{input type=type value=value id=label class="form-control"}}
+    {{/if}}
+  </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/object-form">
+
+
+    {{yield}}
+
+    
+
+</script>
+ 
+ 
+     <!-- Bootstrap & jQuery core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.0/handlebars.min.js" ></script>
+    <script src="js/ember-1.7.0.js"></script>
+    <script src="js/swag.min.js"></script>
+	<script>Swag.registerHelpers(Ember.Handlebars);</script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.0.0-beta.8/ember-data.min.js"></Script>
+
+    <script type="text/javascript" src="js/ember-droplet-mixin.js"></script>
+    <script type="text/javascript" src="js/ember-droplet-view.js"></script>
+    
+	<script src="client.js"></script>
+    <!-- Bootcards JS -->
+    
+    <script src="bootcards-1.0.0/src/js/bootcards.js"></script>
+    <!--recommended: FTLabs FastClick library-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.2/fastclick.min.js"></script>
+
+    <script type="text/javascript">
+
+      /*
+       * Initialize Bootcards.
+       * 
+       * Parameters:
+       * - offCanvasBackdrop (boolean): show a backdrop when the offcanvas is shown
+       * - offCanvasHideOnMainClick (boolean): hide the offcanvas menu on clicking outside the off canvas
+       * - enableTabletPortraitMode (boolean): enable single pane mode for tablets in portraitmode
+       * - disableRubberBanding (boolean): disable the iOS rubber banding effect
+       * - disableBreakoutSelector (boolean) : for iOS apps that are added to the home screen:
+                            jQuery selector to target links for which a fix should be added to not
+                            allow those links to break out of fullscreen mode.
+       */
+      bootcards.init( {
+        offCanvasBackdrop : true,
+        offCanvasHideOnMainClick : true,
+        enableTabletPortraitMode : true,
+        disableRubberBanding : true 
+      });
+
+      //enable FastClick
+      window.addEventListener('load', function() {
+          FastClick.attach(document.body);
+      }, false);
+
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-431558-28', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  </body>
+</html>

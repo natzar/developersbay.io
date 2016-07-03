@@ -1,0 +1,80 @@
+{% extends 'layouts/application.html' %}
+
+
+
+{% block content %}
+<style>
+	body{background:url('/stamp/images/background-images/gp-blue.jpg') ;}
+	</style>
+	
+	
+	  <div class="container bootcards-container push-right">
+
+
+
+
+<div id="login-overlay" class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              
+              <h4 class="modal-title" id="myModalLabel"><span class="fa fa-sign-in"></span> Entrar</h4>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                  <div class="col-xs-6">
+                      <div class="well">
+                          <form id="loginForm" method="POST" action="/signup" validate="validate">
+                          
+                              <div class="form-group">
+                                  <label for="nombre" class="control-label">Nombre y apellidos</label>
+                                  <input type="text" class="form-control" id="name" name="name" value="{{form.name}}" required="required" title="Porfavor escribe tu nombre" placeholder="Para dirigirnos a tí">
+                                  <span class="help-block"></span>
+                              </div>                          
+                              <div class="form-group">
+                                  <label for="email" class="control-label">Email</label>
+                                  <input type="email" class="form-control" id="email" name="email"  autofocus value="{{form.email}}" required="required" title="Please enter you username" placeholder="ejemplo@gmail.com">
+                                  <span class="help-block"></span>
+                              </div>
+                              <div class="form-group">
+                                  <label for="password" class="control-label">Password</label>
+                                  <input type="password" class="form-control" id="password" name="password" value="" required="" placeholder="Password" required="required">
+                                  <span class="help-block"></span>
+                              </div>
+
+                              <div class="checkbox">
+                                  <label>
+                                      <input type="checkbox" name="termsandconditions" id="termsandconditions" required="required"> <small>He leído los <a href="/termsandconditions">términos y condiciones</a>
+                                  </label>
+                                  
+                              </div>
+
+                              <button type="submit" class="btn btn-success btn-block">Regístrame</button>
+
+                              {% if message.length > 0 %}
+		<div class="alert alert-danger"><%= message %></div>
+	{% endif %}
+                          </form>
+                      </div>
+                  </div>
+                  <div class="col-xs-6">
+
+
+                    
+                      <ul class="list-unstyled" style="line-height: 2;font-size:14px;font-weight:Bold">
+                          <li><span class="fa fa-check text-success"></span> Ahorra tiempo</li>
+                          <li><span class="fa fa-check text-success"></span> Consigue mejores programadores</li>
+                          <li><span class="fa fa-check text-success"></span> Consultoría gratuíta incluida</li>
+                          <li><span class="fa fa-check text-success"></span> +50 Programadores disponibles</li>
+                          <li><span class="fa fa-check text-success"></span> Entrevistados y seleccionados para tí</li>
+                          <li><a href="/"><u>Leer más</u></a></li>
+                          <li style="font-style:normal"><br><strong>¿Prefieres una atención personalizada?</strong><br>Escríbenos a hello@developersbay.io</li>
+                      </ul>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</div>
+{% endblock %}
